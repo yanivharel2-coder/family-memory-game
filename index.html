@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>משחק הזיכרון המשפחתי</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="menu-screen" class="screen">
+        <h1>משחק הזיכרון המשפחתי! ❤️</h1>
+        
+        <div class="menu-section">
+            <h3>1. בחר מצב משחק:</h3>
+            <button class="mode-btn active" data-mode="1">שחקן יחיד</button>
+            <button class="mode-btn" data-mode="2">שני שחקנים</button>
+            <button class="mode-btn" data-mode="3">עבודת צוות 🤝</button>
+        </div>
+
+        <div id="sub-mode-section" class="menu-section hidden">
+            <h3>אפשרות זמן:</h3>
+            <button class="sub-mode-btn active" data-timed="false">בלי זמן ⏱️</button>
+            <button class="sub-mode-btn" data-timed="true">עם זמן (לפי קושי) ⏳</button>
+        </div>
+
+        <div class="menu-section">
+            <h3>2. בחר רמת קושי:</h3>
+            <button class="difficulty-btn active" data-pairs="4" data-time="30">קל (4 זוגות)</button>
+            <button class="difficulty-btn" data-pairs="8" data-time="20">בינוני (8 זוגות)</button>
+            <button class="difficulty-btn" data-pairs="12" data-time="10">קשה (12 זוגות)</button>
+        </div>
+
+        <button id="start-btn">מתחילים לשחק! 🚀</button>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <div id="timer-container" class="hidden">
+            <div id="timer-bar"></div>
+        </div>
+
+        <div id="game-status">
+            <div id="player-turn-indicator" class="hidden">תור: <span id="current-player">שחקן 1</span></div>
+            <div id="score-board">
+                <span id="score-p1">זוגות שנמצאו: 0</span>
+                <span id="score-p2" class="hidden"> | שחקן 2: 0</span>
+            </div>
+            <div id="turns-board">תורות: <span id="turns-count">0</span></div>
+            <button id="back-btn">חזרה לתפריט ↩️</button>
+        </div>
+
+        <div id="game-board"></div>
+    </div>
+
+    <div id="math-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>🎯 אתגר כפל! 🎯</h2>
+            <div id="math-question">5 × 4 = ?</div>
+            <div id="math-options"></div>
+        </div>
+    </div>
+
+    <div id="dragon-attack" class="dragon-overlay hidden">
+        <div class="dragon-wrapper">
+            <div class="dragon-emoji-flying">🐉</div>
+            <div class="dragon-fire-breath">🔥💨</div>
+        </div>
+        <div class="full-screen-burn"></div>
+    </div>
+
+    <div id="player-hit-effect" class="hit-overlay hidden">
+        <div id="hit-emoji">⚡</div>
+    </div>
+
+    <div id="victory-screen" class="victory-overlay hidden">
+        <div class="victory-dragon-container">
+            <div class="victory-punch">👊</div>
+            <div class="victory-dragon">🐉</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

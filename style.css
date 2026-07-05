@@ -1,0 +1,365 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+.screen {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden { display: none !important; }
+
+h1 { color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); margin-bottom: 30px; font-size: 28px; }
+h3 { color: #fff; margin-bottom: 10px; }
+
+.menu-section {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+button {
+    background: white;
+    border: none;
+    padding: 12px 20px;
+    margin: 5px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+button:active { transform: scale(0.95); }
+
+.mode-btn.active, .difficulty-btn.active, .sub-mode-btn.active {
+    background: #4caf50;
+    color: white;
+}
+
+#start-btn {
+    background: #ff5722;
+    color: white;
+    font-size: 20px;
+    padding: 15px 40px;
+    margin-top: 20px;
+    border-radius: 30px;
+    width: 80%;
+    align-self: center;
+}
+
+/* שעון חול */
+#timer-container {
+    width: 100%;
+    height: 14px;
+    background: #e0e0e0;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#timer-bar {
+    width: 100%;
+    height: 100%;
+    background: #ff1744;
+    transition: width 0.1s linear;
+}
+
+/* לוח הסטטוס */
+#game-status {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    gap: 10px;
+}
+
+#back-btn { padding: 6px 12px; font-size: 14px; margin: 0; background: #9e9e9e; color: white;}
+
+/* לוח משחק */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.card {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease-out;
+    cursor: pointer;
+}
+
+.card.flipped { transform: rotateY(180deg); }
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-front {
+    background: #2196f3;
+    color: white;
+    font-size: 28px;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+}
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* מסך פופ-אפ לתרגילי חשבון */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 { margin-bottom: 20px; color: #ff5722; }
+#math-question { font-size: 42px; font-weight: bold; margin-bottom: 25px; color: #333; direction: ltr; }
+#math-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+#math-options button { font-size: 24px; padding: 15px; margin: 0; background: #f0f0f0; border: 2px solid #ccc; border-radius: 12px; color: #333; }
+#math-options button:active { background: #e0e0e0; }
+
+/* אנימציית הדרקון שעף לרוחב המסך */
+.dragon-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.dragon-wrapper {
+    position: absolute;
+    top: 30%;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: -300px;
+    animation: flyAcross 2.2s linear forwards;
+}
+
+.dragon-emoji-flying { font-size: 100px; }
+.dragon-fire-breath { font-size: 50px; margin-left: -20px; animation: flickerFire 0.1s infinite alternate; }
+
+.full-screen-burn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,150,0,0.95) 0%, rgba(255,0,0,0.95) 70%);
+    opacity: 0;
+    animation: screenFlashBurn 2.2s linear forwards;
+}
+
+@keyframes flyAcross {
+    0% { left: -300px; transform: scaleX(-1); }
+    100% { left: 100vw; transform: scaleX(-1); }
+}
+@keyframes flickerFire {
+    0% { transform: scale(0.9) translateX(-5px); }
+    100% { transform: scale(1.2) translateX(5px); }
+}
+@keyframes screenFlashBurn {
+    0% { opacity: 0; }
+    30% { opacity: 0; }
+    50% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* אנימציית מתקפת הנגד של השחקן (במהלך המשחק) */
+.hit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+#hit-emoji {
+    font-size: 150px;
+    animation: popAndSpin 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    text-shadow: 0px 0px 30px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes popAndSpin {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    50% { transform: scale(1.4) rotate(20deg); opacity: 1; }
+    80% { transform: scale(1.2) rotate(0deg); opacity: 1; }
+    100% { transform: scale(0) rotate(45deg); opacity: 0; }
+}
+
+/* =============================================
+   🏆 🔥 אנימציית סיום: הדרקון חוטף נוקאאוט 🔥 🏆
+   ============================================= */
+
+.victory-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000; /* מעל הכל לחלוטין */
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.victory-dragon-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+}
+
+/* הדרקון בסיום */
+.victory-dragon {
+    font-size: 150px;
+    transition: transform 0.5s ease-in-out;
+    animation: dragonSpawn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+               dragonKnockout 1.5s ease-in-out 0.6s forwards; /* מתחיל מיד אחרי האגרוף */
+}
+
+/* האגרוף שיכה בדרקון */
+.victory-punch {
+    position: absolute;
+    font-size: 120px;
+    z-index: 10001;
+    opacity: 0;
+    animation: punchAttack 0.7s ease-in forwards;
+}
+
+/* אנימציית כניסת הדרקון לסצינה */
+@keyframes dragonSpawn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+/* אנימציית האגרוף הטס */
+@keyframes punchAttack {
+    0% { transform: scale(4) translate(-200px, -200px); opacity: 0; }
+    50% { transform: scale(1) translate(0, 0); opacity: 1; } /* נקודת הפגיעה */
+    70% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+/* אנימציית הדרקון נשכב על הרצפה ומעולף */
+@keyframes dragonKnockout {
+    0% { transform: rotate(0deg) translateY(0); }
+    20% { transform: rotate(-15deg) translateY(-30px); filter: hue-rotate(90deg); } /* רעידה מהמכה */
+    40% { transform: rotate(90deg) translateY(0); } /* מסתובב ונשכב על הצד */
+    70% { transform: rotate(90deg) translateY(150px); opacity: 1; } /* נופל למטה */
+    100% { transform: rotate(90deg) translateY(300px); opacity: 0; } /* נעלם למטה */
+}
+
+/* תיקון חסימות לחיצות למסכים מוסתרים */
+.dragon-overlay.hidden, 
+.hit-overlay.hidden,
+.modal-overlay.hidden,
+.victory-overlay.hidden {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+.modal-overlay:not(.hidden) {
+    pointer-events: auto !important;
+}
+
+@media (max-width: 360px) {
+    #game-board { gap: 5px; }
+    h1 { font-size: 22px; }
+    #game-status { font-size: 12px; padding: 8px; }
+    .card-front { font-size: 22px; }
+    #math-question { font-size: 32px; }
+    .dragon-wrapper { width: 180px; }
+    .dragon-emoji-flying { font-size: 70px; }
+    #hit-emoji { font-size: 100px; }
+    .victory-dragon { font-size: 100px; }
+    .victory-punch { font-size: 80px; }
+}
